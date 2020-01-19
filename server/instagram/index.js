@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("../network");
 const qs = require("qs");
+const InstagramStore = require("./store");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -18,25 +19,39 @@ router.get("/callback", async function(req, res) {
   if (!code) {
     return res.send("error");
   }
-  const options = {
+  const sl_options = {
     client_id: process.env.INSTAGRAM_CLIENT_ID,
     client_secret: process.env.INSTAGRAM_CLIENT_SECRET,
     grant_type: "authorization_code",
     redirect_uri: process.env.INSTAGRAM_REDIRECT_URI,
     code
   };
-  const reqOptions = {
+  const sl_reqOptions = {
     url: `${process.env.INSTAGRAM_OAUTH_URI}/access_token`,
     method: "post",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    data: qs.stringify(options)
+    data: qs.stringify(sl_options)
   };
   try {
-    const response = await axios.request(reqOptions);
-    console.log("data", response.data);
-    return res.status(200).send(response.data);
+    const sl_response = await axios.request(sl_reqOptions);
+    console.log("data", sl_response.data);
+    const ll_options = {
+      client_secret: process.env.INSTAGRAM_CLIENT_SECRET,
+      grant_type: "ig_exchange_token",
+      access_token: sl_response.data.access_token
+    };
+    const ll_reqOptions = {
+      url: `${process.env.INSTAGRAM_GRAPH_URI}/access_token`,
+      method: "get",
+      params: ll_options
+    };
+    const ll_response = await axios.request(ll_reqOptions);
+    console.log("data", ll_response.data);
+    InstagramStore.setToken(ll_response.data.access_token);
+    console.log("InstagramStore", InstagramStore.getToken());
+    return res.status(200).send(ll_response.data);
   } catch (error) {
     console.log(error);
   }

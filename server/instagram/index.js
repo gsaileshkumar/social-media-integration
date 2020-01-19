@@ -13,6 +13,18 @@ router.get("/auth", function(req, res) {
 });
 router.get("/callback", function(req, res) {
   console.log("/callback hit");
+  console.log(req.query.code);
+  if (!code) {
+    return res.send("error");
+  }
+  const options = {
+    client_id: process.env.INSTAGRAM_CLIENT_ID,
+    client_secret: process.env.INSTAGRAM_CLIENT_SECRET,
+    grant_type: "authorization_code",
+    redirect_uri: process.env.INSTAGRAM_REDIRECT_URI,
+    code
+  };
+  return axios.post(`${process.env.INSTAGRAM_OAUTH_URI}/access_token`, options);
 });
 
 module.exports = router;

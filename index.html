@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Social Media integration</title>
+    <style>
+      div#instagram-tiles {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .tile {
+        width: 500px;
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+      }
+      .tile img {
+        height: 500px;
+        width: 500px;
+      }
+    </style>
   </head>
   <body>
     <div id="instagram-tiles"></div>
@@ -18,7 +34,14 @@
             const html = `
             <div class="tile">
               <div class="tile-image">
-                <img src='${tile.media_url}' alt='insta-img'/>  
+                ${
+                  tile.media_type === "VIDEO"
+                    ? `<video width="500" height="500">
+                        <source src='${tile.media_url}' type="video/mp4">
+                      Your browser does not support the video tag.
+                      </video>`
+                    : `<img src='${tile.media_url}' alt='insta-img'/>`
+                }  
               </div>
               <div class="detail-section">
                 <p>${tile.timestamp}</p>

@@ -26,7 +26,6 @@ router.get("/auth", async function(req, res) {
   };
   try {
     const response = await axios.request(reqOptions);
-    console.log(response);
     TwitterToken.set(response.data.access_token);
     return res.status(200).send("Twitter authorization SUCCESS!!!");
   } catch (error) {

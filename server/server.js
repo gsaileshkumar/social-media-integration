@@ -7,6 +7,7 @@ const path = require("path");
 const instagram = require("./instagram");
 const instagramToken = require("./instagram/store");
 const twitter = require("./twitter");
+const twitterToken = require("./twitter/store");
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
@@ -25,9 +26,24 @@ app.get("/content", async (req, res) => {
       access_token: instagramToken.get()
     }
   };
+  const twitterOptions = {
+    url: `${process.env.TWITTER_API_URI}/statuses/user_timeline.json`,
+    method: "get",
+    params: {
+      screen_name: "gsaileshkumar"
+    },
+    headers: {
+      Authorization: `Bearer ${twitterToken.get()}`
+    }
+  };
   try {
     const instagramResponse = await axios.request(instagramMediaOptions);
-    res.status(200).send(instagramResponse.data);
+    const twitterResponse = await axios.request(twitterOptions);
+    const data = {
+      instagram: instagramResponse.data,
+      twitter: twitterResponse.data
+    };
+    res.status(200).send(data);
   } catch (error) {
     console.log(error);
     res.status(500).send("SERVER ERROR");

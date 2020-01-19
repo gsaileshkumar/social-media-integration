@@ -10,7 +10,7 @@ const instagramToken = require("./instagram/store");
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-app.use(cors());
+// app.use(cors());
 
 app.use("/instagram", instagram);
 

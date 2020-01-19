@@ -24,7 +24,11 @@ router.get("/callback", function(req, res) {
     redirect_uri: process.env.INSTAGRAM_REDIRECT_URI,
     code
   };
-  return res.send(await axios.post(`${process.env.INSTAGRAM_OAUTH_URI}/access_token`, options));
+  return axios
+    .post(`${process.env.INSTAGRAM_OAUTH_URI}/access_token`, options)
+    .then(resp => {
+      return res.send(resp);
+    });
 });
 
 module.exports = router;

@@ -30,7 +30,7 @@
         .then(resp => resp.json())
         .then(resp => {
           console.log(resp);
-          const tiles = resp.data.map(tile => {
+          const tiles = resp.instagram.data.map(tile => {
             const html = `
             <div class="tile">
               <div class="tile-image">

@@ -7,6 +7,13 @@
     <title>Document</title>
   </head>
   <body>
-    Test content Dev - 2
+    <div></div>
+    <script>
+      var response = fetch(
+        "https://social-media-integrate.herokuapp.com/instagram/content"
+      )
+        .then(res => res.json())
+        .then(reps => console.log(resp));
+    </script>
   </body>
 </html>

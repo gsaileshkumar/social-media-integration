@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("../network");
 const qs = require("qs");
-const InstagramStore = require("./store");
+const InstagramToken = require("./store");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -10,9 +10,23 @@ if (process.env.NODE_ENV !== "production") {
 
 router.get("/auth", function(req, res) {
   return res.redirect(
-    `${process.env.INSTAGRAM_OAUTH_URI}/authorize?client_id=${process.env.INSTAGRAM_CLIENT_ID}&redirect_uri=${process.env.INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`
+    // `${process.env.INSTAGRAM_OAUTH_URI}/authorize?client_id=${process.env.INSTAGRAM_CLIENT_ID}&redirect_uri=${process.env.INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`
+    `${process.env.INSTAGRAM_OAUTH_URI}/authorize?
+    client_id=${process.env.INSTAGRAM_CLIENT_ID}
+    &redirect_uri=${process.env.INSTAGRAM_REDIRECT_URI}
+    &scope=user_profile,user_media
+    &response_type=code`
+    // process.env.INSTAGRAM_OAUTH_URI +
+    //   "/authorize?" +
+    //   "client_id=" +
+    //   process.env.INSTAGRAM_CLIENT_ID +
+    //   "&redirect_uri=" +
+    //   process.env.INSTAGRAM_REDIRECT_URI +
+    //   "&scope=user_profile,user_media" +
+    //   "&response_type=code"
   );
 });
+
 router.get("/callback", async function(req, res) {
   const { code } = req.query;
   if (!code) {
@@ -46,7 +60,7 @@ router.get("/callback", async function(req, res) {
       params: ll_options
     };
     const ll_response = await axios.request(ll_reqOptions);
-    InstagramStore.setToken(ll_response.data.access_token);
+    InstagramToken.set(ll_response.data.access_token);
     return res.status(200).send("Instagram authorization SUCCESS!!!");
   } catch (error) {
     console.log(error);

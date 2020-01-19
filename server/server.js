@@ -5,7 +5,7 @@ const cors = require("cors");
 const axios = require("./network");
 const path = require("path");
 const instagram = require("./instagram");
-const instagramStore = require("./instagram/store");
+const instagramToken = require("./instagram/store");
 // const twitter = require("./twitter");
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
@@ -26,7 +26,7 @@ app.get("/content", async (req, res) => {
     params: {
       fields:
         "id,caption,permalink,media_url,timestamp,username,thumbnail_url,media_type",
-      access_token: instagramStore.getToken()
+      access_token: instagramToken.get()
     }
   };
   try {

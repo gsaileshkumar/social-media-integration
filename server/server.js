@@ -10,7 +10,17 @@ const instagramToken = require("./instagram/store");
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-app.use(cors({ origin: "https://sailesh.netlify.com" }));
+const whitelist = ["https://sailesh.netlify.com"];
+var corsOptions = {
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
+};
+app.use(cors(corsOptions));
 
 app.use("/instagram", instagram);
 
@@ -26,7 +36,6 @@ app.get("/content", async (req, res) => {
   };
   try {
     const instagramResponse = await axios.request(instagramMediaOptions);
-    console.log("instagram resp", instagramResponse.data);
     res.status(200).send(instagramResponse.data);
   } catch (error) {
     console.log(error);

@@ -27,6 +27,8 @@ router.get("/callback", function(req, res) {
   return axios
     .post(`${process.env.INSTAGRAM_OAUTH_URI}/access_token`, options)
     .then(resp => {
+      console.log(resp);
+      console.log("data", resp.data);
       return res.send(resp);
     });
 });

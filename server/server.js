@@ -6,13 +6,14 @@ const axios = require("./network");
 const path = require("path");
 const instagram = require("./instagram");
 const instagramToken = require("./instagram/store");
-// const twitter = require("./twitter");
+const twitter = require("./twitter");
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 app.use(cors({ origin: "https://sailesh.netlify.com" }));
 
 app.use("/instagram", instagram);
+app.use("/twitter", twitter);
 
 app.get("/content", async (req, res) => {
   const instagramMediaOptions = {

@@ -35,7 +35,7 @@ router.get("/callback", async function(req, res) {
   try {
     const response = await axios.request(reqOptions);
     console.log("data", response.data);
-    return res.send(response.data);
+    return res.status(200).send(response.data);
   } catch (error) {
     console.log(error);
   }

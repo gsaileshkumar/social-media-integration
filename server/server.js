@@ -2,8 +2,10 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require("cors");
+const axios = require("../network");
 const path = require("path");
 const instagram = require("./instagram");
+const instagramStore = require("./instagram/store");
 // const twitter = require("./twitter");
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
@@ -15,6 +17,26 @@ app.use("/instagram", instagram);
 app.get("/callback", async (req, res) => {
   console.log("/callback endpoint hit");
   res.send("/callback endpoint hit");
+});
+
+app.get("/content", async (req, res) => {
+  const instagramMediaOptions = {
+    url: `${process.env.INSTAGRAM_GRAPH_URI}/me/media`,
+    method: "get",
+    params: {
+      fields:
+        "id,caption,permalink,media_url,timestamp,username,thumbnail_url,media_type",
+      access_token: instagramStore.getToken()
+    }
+  };
+  try {
+    const instagramResponse = await axios.request(instagramMediaOptions);
+    console.log("instagram resp", instagramResponse.data);
+    res.status(200).send(instagramResponse.data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("SERVER ERROR");
+  }
 });
 
 app.get("/", (req, res) => {

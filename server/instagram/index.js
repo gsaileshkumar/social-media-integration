@@ -15,7 +15,6 @@ router.get("/auth", function(req, res) {
 });
 router.get("/callback", async function(req, res) {
   const { code } = req.query;
-  console.log("code", code);
   if (!code) {
     return res.send("error");
   }
@@ -36,7 +35,6 @@ router.get("/callback", async function(req, res) {
   };
   try {
     const sl_response = await axios.request(sl_reqOptions);
-    console.log("data", sl_response.data);
     const ll_options = {
       client_secret: process.env.INSTAGRAM_CLIENT_SECRET,
       grant_type: "ig_exchange_token",
@@ -48,10 +46,8 @@ router.get("/callback", async function(req, res) {
       params: ll_options
     };
     const ll_response = await axios.request(ll_reqOptions);
-    console.log("data", ll_response.data);
     InstagramStore.setToken(ll_response.data.access_token);
-    console.log("InstagramStore", InstagramStore.getToken());
-    return res.status(200).send(ll_response.data);
+    return res.status(200).send("Instagram authorization SUCCESS!!!");
   } catch (error) {
     console.log(error);
   }

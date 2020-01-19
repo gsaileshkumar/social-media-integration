@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("../network");
+const qs = require("qs");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -30,7 +31,7 @@ router.get("/callback", async function(req, res) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    data: options
+    data: qs.stringify(options)
   };
   try {
     const response = await axios.request(reqOptions);

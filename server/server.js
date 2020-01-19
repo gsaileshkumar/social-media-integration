@@ -10,7 +10,7 @@ const instagramToken = require("./instagram/store");
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-app.use(cors({ origin: "sailesh.netlify.com" }));
+app.use(cors({ origin: "https://sailesh.netlify.com" }));
 
 app.use("/instagram", instagram);
 

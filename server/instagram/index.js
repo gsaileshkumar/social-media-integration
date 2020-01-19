@@ -51,6 +51,7 @@ router.get("/callback", async function(req, res) {
     return res.status(200).send("Instagram authorization SUCCESS!!!");
   } catch (error) {
     console.log(error);
+    res.status(500).send("SERVER ERROR");
   }
 });
 

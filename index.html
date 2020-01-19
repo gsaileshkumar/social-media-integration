@@ -30,6 +30,7 @@
         .then(resp => resp.json())
         .then(resp => {
           console.log(resp);
+          tilesNode.innerHTML += "<h2>Instagram Feed</h2>";
           const tiles = resp.instagram.data.map(tile => {
             const html = `
             <div class="tile">
@@ -46,6 +47,18 @@
               <div class="detail-section">
                 <p>${tile.timestamp}</p>
                 <p>${tile.caption}</p>
+              </div>
+            </div>
+            `;
+            return (tilesNode.innerHTML += html);
+          });
+          tilesNode.innerHTML += "<h2>Twitter Feed</h2>";
+          const tiles = resp.twitter.map(tile => {
+            const html = `
+            <div class="tile">
+              <div class="detail-section">
+                <p>${tile.created_at}</p>
+                <p>${tile.text}</p>
               </div>
             </div>
             `;

@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require("cors");
+const path = require("path");
 const instagram = require("./instagram");
 // const twitter = require("./twitter");
 
@@ -17,5 +18,5 @@ app.get("/callback", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send('Hello<br><a href="/auth">Log in with Instagram</a>');
+  res.sendFile(path.join(__dirname + "../index.html"));
 });

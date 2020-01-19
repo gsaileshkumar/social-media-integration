@@ -2,14 +2,14 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require("cors");
+const instagram = require("./instagram");
+// const twitter = require("./twitter");
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 app.use(cors());
 
-app.get("/auth", (req, res) => {
-  console.log("/auth endpoint hit");
-  res.send("/auth endpoint hit");
-});
+app.use("/instagram", instagram);
 
 app.get("/callback", async (req, res) => {
   console.log("/callback endpoint hit");

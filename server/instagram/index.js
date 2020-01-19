@@ -24,14 +24,18 @@ router.get("/callback", async function(req, res) {
     redirect_uri: process.env.INSTAGRAM_REDIRECT_URI,
     code
   };
+  const reqOptions = {
+    url: `${process.env.INSTAGRAM_OAUTH_URI}/access_token`,
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    data: options
+  };
   try {
-    const responseJson = await axios.post(
-      `${process.env.INSTAGRAM_OAUTH_URI}/access_token`,
-      options
-    );
-    console.log(responseJson);
-    console.log("data", responseJson.data);
-    return res.send(responseJson.data);
+    const response = await axios.request(reqOptions);
+    console.log("data", response.data);
+    return res.send(response.data);
   } catch (error) {
     console.log(error);
   }

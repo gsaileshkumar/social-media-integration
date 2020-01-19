@@ -9,8 +9,8 @@
   <body>
     <div></div>
     <script>
-      const resp = fetch("https://social-media-integrate.herokuapp.com/content")
-        .then(resp > resp.json())
+      fetch("https://social-media-integrate.herokuapp.com/content")
+        .then(resp => resp.json())
         .then(resp => console.log(resp));
     </script>
   </body>

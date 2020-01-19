@@ -12,8 +12,8 @@ router.get("/auth", function(req, res) {
   );
 });
 router.get("/callback", function(req, res) {
-  console.log("/callback hit");
-  console.log(req.query.code);
+  const { code } = req.query;
+  console.log("code", code);
   if (!code) {
     return res.send("error");
   }

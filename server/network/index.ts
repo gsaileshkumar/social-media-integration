@@ -1,8 +1,8 @@
-const axios = require("axios").default;
+import axios from "axios";
 
 const instance = axios.create({
   baseURL: ".",
   timeout: 2000
 });
 
-module.exports = instance;
+export default instance;

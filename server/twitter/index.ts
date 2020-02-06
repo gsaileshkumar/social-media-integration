@@ -1,11 +1,14 @@
-const express = require("express");
+import express from "express";
+import axios from "../network";
+import qs from "qs";
+import TwitterToken from "./store";
+import { Method } from "axios";
+import dotenv from "dotenv";
+
 const router = express.Router();
-const axios = require("../network");
-const qs = require("qs");
-const TwitterToken = require("./store");
 
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
+  dotenv.config();
 }
 
 router.get("/auth", async function(req, res) {
@@ -14,13 +17,13 @@ router.get("/auth", async function(req, res) {
   };
   const reqOptions = {
     url: `${process.env.TWITTER_OAUTH_URI}/token`,
-    method: "post",
+    method: "post" as Method,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
     auth: {
-      username: process.env.TWITTER_API_KEY,
-      password: process.env.TWITTER_API_SECRET_KEY
+      username: process.env.TWITTER_API_KEY || "",
+      password: process.env.TWITTER_API_SECRET_KEY || ""
     },
     data: qs.stringify(options)
   };
@@ -34,4 +37,4 @@ router.get("/auth", async function(req, res) {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,11 +1,14 @@
-const express = require("express");
+import express from "express";
+import axios from "../network";
+import qs from "qs";
+import InstagramToken from "./store";
+import { Method } from "axios";
+import dotenv from "dotenv";
+
 const router = express.Router();
-const axios = require("../network");
-const qs = require("qs");
-const InstagramToken = require("./store");
 
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
+  dotenv.config();
 }
 
 router.get("/auth", function(req, res) {
@@ -28,7 +31,7 @@ router.get("/callback", async function(req, res) {
   };
   const sl_reqOptions = {
     url: `${process.env.INSTAGRAM_OAUTH_URI}/access_token`,
-    method: "post",
+    method: "post" as Method,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
@@ -43,7 +46,7 @@ router.get("/callback", async function(req, res) {
     };
     const ll_reqOptions = {
       url: `${process.env.INSTAGRAM_GRAPH_URI}/access_token`,
-      method: "get",
+      method: "get" as Method,
       params: ll_options
     };
     const ll_response = await axios.request(ll_reqOptions);
@@ -55,4 +58,4 @@ router.get("/callback", async function(req, res) {
   }
 });
 
-module.exports = router;
+export default router;

@@ -13,7 +13,15 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-app.use(cors({ origin: "https://sailesh.netlify.com" }));
+app.use(
+  cors({
+    origin: [
+      "https://sailesh.netlify.com",
+      "http://saileshkumar.com",
+      "https://saileshkumar.com"
+    ]
+  })
+);
 
 app.use("/instagram", instagram);
 app.use("/twitter", twitter);

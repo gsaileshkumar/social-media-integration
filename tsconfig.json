@@ -2,8 +2,8 @@
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "composite": true,
-    "declaration": true,
+    "composite": false,
+    "declaration": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
@@ -18,10 +18,10 @@
     ],
     "removeComments": true,
     "skipLibCheck": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
     "target": "es2018",
     "resolveJsonModule": true,
-    "outDir": "build"
+    "declarationMap": false
   }
 }

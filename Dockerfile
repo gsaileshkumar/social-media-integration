@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN rm -rf node_modules
-# RUN npm install -g npm@latest typescript
+RUN npm install -g typescript
 # RUN npm i core-util-is
 RUN npm ci --only=production --silent
 

@@ -7,12 +7,11 @@ COPY package*.json ./
 
 RUN rm -rf node_modules
 # RUN npm i core-util-is
-RUN npm ci --only=production --silent
+# RUN npm ci --only=production --silent
+RUN npm install
 
 # Copy sources and build
 COPY . .
-
-RUN tsc
 
 RUN npm run build
 

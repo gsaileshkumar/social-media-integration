@@ -22,6 +22,7 @@
     "strict": true,
     "target": "es2018",
     "resolveJsonModule": true,
-    "declarationMap": false
+    "declarationMap": false,
+    "types": ["node"]
   }
 }

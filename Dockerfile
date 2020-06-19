@@ -13,6 +13,8 @@ RUN npm ci --only=production --silent
 # Copy sources and build
 COPY . .
 
+RUN tsc
+
 RUN npm run build
 
 CMD ["node", "server/server.js"]

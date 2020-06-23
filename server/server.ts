@@ -33,6 +33,7 @@ app.get('/content', async (req, res) => {
     method: 'get' as Method,
     params: {
       screen_name: process.env.TWITTER_SCREEN_NAME,
+      tweet_mode: 'extended',
     },
     headers: {
       Authorization: `Bearer ${twitterToken.get()}`,
